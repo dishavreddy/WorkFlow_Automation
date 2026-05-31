@@ -3,7 +3,7 @@ import urllib.request
 import urllib.error
 import time
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://127.0.0.1:8000";
 
 def make_request(path, method="GET", data=None, headers=None, is_form=False):
     url = f"{BASE_URL}{path}"
