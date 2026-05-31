@@ -38,7 +38,10 @@ export function useAgentState() {
           body: formData.toString()
         });
         
-        if (!res.ok) throw new Error('Authentication failed');
+        if (!res.ok) {
+  console.log(await res.text());
+  throw new Error('Authentication failed');
+}
         
         const data = await res.json();
         const token = data.access_token;
