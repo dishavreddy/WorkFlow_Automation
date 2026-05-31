@@ -1,0 +1,77 @@
+services:
+  - type: keyvalue
+    name: ai-workflow-redis
+    ipAllowList: []
+
+  - type: web
+    name: ai-workflow-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: ai-workflow-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: ai-workflow-db
+          property: password
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: ai-workflow-db
+          property: database
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: ai-workflow-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: ai-workflow-db
+          property: port
+      - key: REDIS_HOST
+        fromService:
+          type: keyvalue
+          name: ai-workflow-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: keyvalue
+          name: ai-workflow-redis
+          property: port
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: keyvalue
+          name: ai-workflow-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: ai-workflow-redis
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: MOCK_EMAIL_INBOX
+        value: "true"
+
+  - type: web
+    name: ai-workflow-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+
+databases:
+  - name: ai-workflow-db
+    databaseName: ai_workflow_db
+    user: ai_workflow

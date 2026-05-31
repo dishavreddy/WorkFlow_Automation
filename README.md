@@ -157,6 +157,35 @@ http://localhost:8000/docs
 
 ---
 
+## Deployment
+
+This repository is a monorepo with separate frontend and backend services:
+
+- Frontend service root: `frontend`
+- Backend service root: `backend`
+- FastAPI ASGI target: `app.main:app`
+- FastAPI source file: `backend/app/main.py`
+
+Use the root `render.yaml` blueprint for Render deployments. It prevents the
+platform from scanning the repository root for a FastAPI entrypoint and instead
+deploys the backend from `backend`, where `app.main:app` resolves correctly.
+
+If deploying without the blueprint, configure two services manually:
+
+```text
+Backend
+  Root directory: backend
+  Build/runtime: Docker or Python
+  Start command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+Frontend
+  Root directory: frontend
+  Build command: npm ci && npm run build
+  Start command: npm run start
+```
+
+---
+
 ## Future Improvements
 
 - Gmail Integration

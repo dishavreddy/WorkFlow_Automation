@@ -5,16 +5,25 @@ interface ApprovalPanelProps {
   approvals: ApprovalItem[];
   onApprove: (id: string) => void;
   onDiscard: (id: string) => void;
+  onOpen?: () => void;
 }
 
-export function ApprovalPanel({ approvals, onApprove }: ApprovalPanelProps) {
+export function ApprovalPanel({ approvals, onApprove, onOpen }: ApprovalPanelProps) {
   return (
     <div className="bg-[#1A1D2E] border border-[#252840] rounded-2xl hover:shadow-[0_0_20px_rgba(79,110,247,0.15)] transition-all group flex flex-col h-[500px] overflow-hidden">
       <div className="p-6 border-b border-[#252840] flex items-center justify-between">
         <h2 className="text-lg font-semibold text-[#F0F0F0]">Pending Approvals</h2>
-        <svg className="w-5 h-5 text-[#8B8FA8] group-hover:text-[#F0F0F0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
-        </svg>
+        <button
+          type="button"
+          aria-label="Open pending approvals"
+          onClick={onOpen}
+          className="h-8 w-8 flex items-center justify-center rounded-lg text-[#8B8FA8] transition-colors hover:bg-[#141720] hover:text-[#F0F0F0] disabled:pointer-events-none"
+          disabled={!onOpen}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
+          </svg>
+        </button>
       </div>
       
       <div className="flex-1 overflow-y-auto p-2">

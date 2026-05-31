@@ -29,5 +29,6 @@ COPY . .
 # Expose API port
 EXPOSE 8000
 
-# Command to launch web API
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Command to launch web API. Keep this rooted in backend/ so app.main resolves
+# to backend/app/main.py, where the FastAPI instance is named app.
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

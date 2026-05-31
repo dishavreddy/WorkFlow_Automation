@@ -7,9 +7,12 @@ interface StatsProps {
     actionItems: number;
     tasksCreated: number;
   };
+  onOpenInsights: () => void;
+  onOpenEmails: () => void;
+  onOpenTasks: () => void;
 }
 
-export function StatsRow({ stats }: StatsProps) {
+export function StatsRow({ stats, onOpenInsights, onOpenEmails, onOpenTasks }: StatsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       {/* Card 1: AI Insights */}
@@ -18,9 +21,16 @@ export function StatsRow({ stats }: StatsProps) {
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#7C5CFC]/20 blur-3xl rounded-full"></div>
         <div className="relative z-10 flex justify-between items-start mb-6">
           <span className="text-xs font-semibold text-[#7C5CFC] uppercase tracking-widest bg-[#7C5CFC]/10 px-3 py-1 rounded-full border border-[#7C5CFC]/20">AI Insights</span>
-          <svg className="w-5 h-5 text-[#8B8FA8] group-hover:text-[#F0F0F0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
-          </svg>
+          <button
+            type="button"
+            aria-label="Open AI insights"
+            onClick={onOpenInsights}
+            className="h-8 w-8 flex items-center justify-center rounded-lg text-[#8B8FA8] transition-colors hover:bg-[#141720] hover:text-[#F0F0F0]"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
+            </svg>
+          </button>
         </div>
         <div className="relative z-10">
           <h3 className="text-2xl font-semibold text-[#F0F0F0] leading-tight mb-2">
@@ -34,9 +44,16 @@ export function StatsRow({ stats }: StatsProps) {
       <div className="bg-[#1A1D2E] border border-[#252840] rounded-2xl p-6 hover:shadow-[0_0_20px_rgba(79,110,247,0.15)] transition-all group">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-[#8B8FA8] font-medium text-sm">Emails Overview</h3>
-          <svg className="w-5 h-5 text-[#8B8FA8] group-hover:text-[#F0F0F0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
-          </svg>
+          <button
+            type="button"
+            aria-label="Open emails overview"
+            onClick={onOpenEmails}
+            className="h-8 w-8 flex items-center justify-center rounded-lg text-[#8B8FA8] transition-colors hover:bg-[#141720] hover:text-[#F0F0F0]"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
+            </svg>
+          </button>
         </div>
         <div className="flex items-end space-x-3 mb-6">
           <div className="text-5xl font-bold text-[#F0F0F0] tracking-tight">{stats.emailsProcessed}</div>
@@ -57,9 +74,16 @@ export function StatsRow({ stats }: StatsProps) {
       <div className="bg-[#1A1D2E] border border-[#252840] rounded-2xl p-6 hover:shadow-[0_0_20px_rgba(79,110,247,0.15)] transition-all group flex flex-col justify-between">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-[#8B8FA8] font-medium text-sm">Tasks Done</h3>
-          <svg className="w-5 h-5 text-[#8B8FA8] group-hover:text-[#F0F0F0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
-          </svg>
+          <button
+            type="button"
+            aria-label="Open tasks done"
+            onClick={onOpenTasks}
+            className="h-8 w-8 flex items-center justify-center rounded-lg text-[#8B8FA8] transition-colors hover:bg-[#141720] hover:text-[#F0F0F0]"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6h8v8M18 6L6 18" />
+            </svg>
+          </button>
         </div>
         <div className="flex items-center justify-between">
           <div className="text-5xl font-bold text-[#F0F0F0] tracking-tight">{stats.tasksCreated}</div>

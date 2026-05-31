@@ -41,6 +41,10 @@ export default function Dashboard() {
 
   const moduleTitle = activeSection === 'Dashboard' ? 'Emails' : activeSection;
   const moduleItems = activeSection === 'Dashboard' ? lists.emails : moduleMap[activeSection];
+  const openModule = (section: SidebarSection) => {
+    setStatsVisible(true);
+    setActiveSection(section);
+  };
 
   return (
     <div className="flex min-h-screen bg-[#0F1117]">
@@ -59,11 +63,22 @@ export default function Dashboard() {
             }}
           />
 
-          {statsVisible && <StatsRow stats={stats} />}
+          {statsVisible && (
+            <StatsRow
+              stats={stats}
+              onOpenInsights={() => openModule('Meetings')}
+              onOpenEmails={() => openModule('Emails')}
+              onOpenTasks={() => openModule('Tasks')}
+            />
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <ModuleColumn title={moduleTitle} items={moduleItems} />
+              <ModuleColumn
+                title={moduleTitle}
+                items={moduleItems}
+                onOpen={() => openModule(moduleTitle as SidebarSection)}
+              />
             </div>
 
             <div className="lg:col-span-1">
@@ -71,6 +86,7 @@ export default function Dashboard() {
                 approvals={approvals}
                 onApprove={approve}
                 onDiscard={discard}
+                onOpen={() => openModule('Tasks')}
               />
             </div>
           </div>
